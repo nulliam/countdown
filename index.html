@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="utf-8" />
+    <title>Coming soon...</title>
+
+    <style>
+
+        html {
+            font-family: monospace;
+        }
+
+        body {
+            margin: 0 0;
+            padding: 0 0;
+            
+            background: -webkit-linear-gradient(90deg, #485563 10%, #29323c 90%); /* Chrome 10+, Saf5.1+ */
+            background:    -moz-linear-gradient(90deg, #485563 10%, #29323c 90%); /* FF3.6+ */
+            background:     -ms-linear-gradient(90deg, #485563 10%, #29323c 90%); /* IE10 */
+            background:      -o-linear-gradient(90deg, #485563 10%, #29323c 90%); /* Opera 11.10+ */
+            background:         linear-gradient(90deg, #485563 10%, #29323c 90%); /* W3C */
+        }
+
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        .releaseDate {
+            text-align: center;
+            color: #fff;
+            font-size: 3em;
+            margin-top: 0;
+            padding-top: 5em;
+        }
+
+        .timer {
+            width: 60%;
+            margin: 0 auto;
+            padding: 4em;
+        }
+
+        .part {
+            display: inline-block;
+            width: 20%;
+            text-align: center;
+            color: #fff;
+        }
+
+        .count {
+            font-size: 5em;
+        }
+
+        .desc {
+            font-size: 2em;
+        }
+
+    </style>
+<head>
+<body>
+
+    <h1 class="releaseDate">October 15th, 2016</h1>
+
+    <div class="timer">
+        <div class="part">
+            <div class="count daysCount"></div>
+            <div class="desc">Days</div>
+        </div><!--
+        --><div class="part">
+            <div class="count hoursCount"></div>
+            <div class="desc">Hours</div>
+        </div><!--
+        --><div class="part">
+            <div class="count minutesCount"></div>
+            <div class="desc">Minutes</div>
+        </div><!--
+        --><div class="part">
+            <div class="count secondsCount"></div>
+            <div class="desc">Seconds</div>
+        </div><!--
+        --><div class="part">
+            <div class="count millisecondsCount"></div>
+            <div class="desc">Milliseconds</div>
+        </div>
+    </div>
+
+    <script>
+
+
+    (function () {
+        var releaseDate = Date.UTC(2016, 9, 15, 0, 0, 0),       //Oct 15, 2016, at midnight
+            daysCountElement = document.getElementsByClassName("daysCount")[0],
+            hoursCountElement = document.getElementsByClassName("hoursCount")[0],
+            minutesCountElement = document.getElementsByClassName("minutesCount")[0],
+            secondsCountElement = document.getElementsByClassName("secondsCount")[0],
+            millisecondsCountElement = document.getElementsByClassName("millisecondsCount")[0],
+            utils = {
+                getQuotientAndRemainder: function(dividend, divisor) {
+                    return {
+                        quotient: Math.floor(dividend / divisor),
+                        remainder: dividend % divisor
+                    };
+                },
+                
+                parseTimeInterval: function(timeInterval) {
+                    var obj = this.getQuotientAndRemainder(timeInterval, 24 * 60 * 60 * 1000),
+                        days = obj.quotient;
+
+                    obj = this.getQuotientAndRemainder(obj.remainder, 60 * 60 * 1000);
+                    var hours = obj.quotient;
+                    obj = this.getQuotientAndRemainder(obj.remainder, 60 * 1000);
+                    var minutes = obj.quotient;
+                    obj = this.getQuotientAndRemainder(obj.remainder, 1000);
+                    var seconds = obj.quotient;
+                    var milliseconds = obj.remainder;
+
+                    return {
+                        days: days,
+                        hours: hours,
+                        minutes: minutes,
+                        seconds: seconds,
+                        milliseconds: milliseconds
+                    };
+                },
+
+                updateTimer: function(date) {
+                    daysCountElement.textContent = date.days;
+                    hoursCountElement.textContent = date.hours;
+                    minutesCountElement.textContent = date.minutes;
+                    secondsCountElement.textContent = date.seconds;
+                    millisecondsCountElement.textContent = date.milliseconds;
+                }
+            };
+
+        window.startTimer = function() {
+            var date = utils.parseTimeInterval(releaseDate - Date.now());
+            utils.updateTimer(date);
+            requestAnimationFrame(startTimer);
+        };
+
+    })();
+
+
+    startTimer();
+
+    </script>
+</body>
+</html>
