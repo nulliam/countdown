@@ -5,11 +5,6 @@
     <title>Coming soon...</title>
 
     <style>
-
-        html {
-            font-family: monospace;
-        }
-
         body {
             background: -webkit-linear-gradient(90deg, #485563 10%, #29323c 90%); /* Chrome 10+, Saf5.1+ */
             background:    -moz-linear-gradient(90deg, #485563 10%, #29323c 90%); /* FF3.6+ */
@@ -18,10 +13,12 @@
             background:         linear-gradient(90deg, #485563 10%, #29323c 90%); /* W3C */
         }
 
-        html, body {
+        html,
+        body {
             height: 100%;
             margin: 0;
             padding: 0;
+            font-family: monospace;
         }
 
         .releaseDate {
@@ -34,15 +31,17 @@
 
         .timer {
             width: 60%;
+            min-width: 800px;
+            text-align: center;
             margin: 0 auto;
             padding: 4em;
         }
 
         .part {
             display: inline-block;
-            width: 20%;
             text-align: center;
             color: #fff;
+            padding: 0 5px;
         }
 
         .count {
@@ -52,39 +51,34 @@
         .desc {
             font-size: 2em;
         }
-
     </style>
 <head>
 <body>
-
     <h1 class="releaseDate">October 15th, 2016</h1>
-
     <div class="timer">
         <div class="part">
             <div class="count daysCount"></div>
             <div class="desc">Days</div>
-        </div><!--
-        --><div class="part">
+        </div>
+        <div class="part">
             <div class="count hoursCount"></div>
             <div class="desc">Hours</div>
-        </div><!--
-        --><div class="part">
+        </div>
+        <div class="part">
             <div class="count minutesCount"></div>
             <div class="desc">Minutes</div>
-        </div><!--
-        --><div class="part">
+        </div>
+        <div class="part">
             <div class="count secondsCount"></div>
             <div class="desc">Seconds</div>
-        </div><!--
-        --><div class="part">
+        </div>
+        <div class="part">
             <div class="count millisecondsCount"></div>
             <div class="desc">Milliseconds</div>
         </div>
     </div>
 
     <script>
-
-
     (function () {
         var releaseDate = Date.UTC(2016, 9, 15, 0, 0, 0),       //Oct 15, 2016, at midnight
             daysCountElement = document.getElementsByClassName("daysCount")[0],
@@ -99,18 +93,21 @@
                         remainder: dividend % divisor
                     };
                 },
-                
+
                 parseTimeInterval: function(timeInterval) {
                     var obj = this.getQuotientAndRemainder(timeInterval, 24 * 60 * 60 * 1000),
-                        days = obj.quotient;
+                        days = obj.quotient,
+                        hours, minutes, seconds, milliseconds;
 
                     obj = this.getQuotientAndRemainder(obj.remainder, 60 * 60 * 1000);
-                    var hours = obj.quotient;
+                    hours = obj.quotient;
+
                     obj = this.getQuotientAndRemainder(obj.remainder, 60 * 1000);
-                    var minutes = obj.quotient;
+                    minutes = obj.quotient;
+
                     obj = this.getQuotientAndRemainder(obj.remainder, 1000);
-                    var seconds = obj.quotient;
-                    var milliseconds = obj.remainder;
+                    seconds = obj.quotient;
+                    milliseconds = obj.remainder;
 
                     return {
                         days: days,
@@ -138,9 +135,7 @@
 
     })();
 
-
     startTimer();
-
     </script>
 </body>
 </html>
